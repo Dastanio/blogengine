@@ -1,0 +1,14 @@
+{% extends 'blog/base_blog.html' %}
+
+{% block title %}
+	{{tag.title}} - {{block.super}}
+{% endblock %}
+
+{% block content %}
+	<h1 class="mt-5">Post with "{{tag.title|title}}" tag:</h1>
+	<h1><a href="{{tag.get_update_url}}">Edit</a></h1>
+
+	{%  for i in tag.posts.all %}
+		{% include 'blog/include/post_card_template.html' %}
+	{% endfor %}
+{% endblock %}
