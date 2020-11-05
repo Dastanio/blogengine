@@ -3,6 +3,7 @@ from .models import Post, Tag
 from django.views.generic import View
 from .utils import *
 from .forms import TagForm, PostForm
+from django.urls import reverse
 
 def post_lists(request):
     posts = Post.objects.order_by('-date_pub')
@@ -37,9 +38,20 @@ class PostUpdate(ObjectUpdateMixin, View):
 	form_model = PostForm
 	template = 'blog/post_update_form.html'
 
+class TagDelete(View):
+	def get(self, request, slug):
+		tag = Tag.objects.get(slug__iexact = slug)
+		return render(request, 'blog/tag_delete_form.html', context = {'tag':tag})
+	def post(self, request, slug):
+		tag = Tag.objects.get(slug__iexact = slug)
+		tag.delete()
+		return redirect(reverse('tags_list_url'))
+
+
 def tags_list(request):
 	tags = Tag.objects.all()
 	return render(request, 'blog/tags_list.html', context={'tags':tags})
+
 
 
 '''

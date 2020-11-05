@@ -6,7 +6,7 @@
 
 {% block content %}
 
-	<form method="post" action="{{tag.get_update_url}}">
+	<form method="post"  action="{{tag.get_update_url}}">
 		{% csrf_token %}
 
 		{% for field in form%}
